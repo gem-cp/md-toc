@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // console.log('Level:', level, 'Current parentStack depth:', parentStack.length);
     // console.log('Parent stack before adjustment:', parentStack.map(ul => ul.tagName + (ul.id ? '#' + ul.id : '')));
 
-
     const listItem = document.createElement('li');
     listItem.classList.add('nav-list-item', `nav-list-item-level-${level}`);
     
