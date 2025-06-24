@@ -20,10 +20,11 @@ document.addEventListener('DOMContentLoaded', function() {
   tocWrapperDiv.id = 'page-toc-nav-container';
   tocWrapperDiv.classList.add('page-toc-container');
 
-  const tocHeader = document.createElement('h3');
-  tocHeader.classList.add('text-delta'); // just-the-docs class for small headings
-  tocHeader.textContent = 'On this page';
-  tocWrapperDiv.appendChild(tocHeader);
+  // Removed h3 "On this page" header
+  // const tocHeader = document.createElement('h3');
+  // tocHeader.classList.add('text-delta');
+  // tocHeader.textContent = 'On this page';
+  // tocWrapperDiv.appendChild(tocHeader);
 
   const tocNav = document.createElement('nav');
   tocNav.id = 'page-toc-nav';
@@ -36,9 +37,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   headers.forEach(header => {
     const id = header.id;
-    if (!id) return;
+    // console.log('Processing header:', header.tagName, 'ID:', id, 'Text:', header.textContent);
+    if (!id) {
+      // console.log('Skipping header due to missing ID:', header.textContent);
+      return;
+    }
 
     const level = parseInt(header.tagName.substring(1)); // Actual H level (1-6)
+    // console.log('Level:', level, 'Current parentStack depth:', parentStack.length);
+    // console.log('Parent stack before adjustment:', parentStack.map(ul => ul.tagName + (ul.id ? '#' + ul.id : '')));
 
     const listItem = document.createElement('li');
     listItem.classList.add('nav-list-item', `nav-list-item-level-${level}`);
@@ -84,8 +91,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     parentStack[parentStack.length - 1].appendChild(listItem);
+    // console.log('Parent stack after adjustment and append:', parentStack.map(ul => ul.tagName + (ul.id ? '#' + ul.id : '')));
   });
 
+  // console.log('Final TOC Nav structure:', tocNav.innerHTML);
   // Only proceed to inject if the TOC actually has content
   if (tocNav.children.length > 0) {
     // Find the active navigation link in the main sidebar

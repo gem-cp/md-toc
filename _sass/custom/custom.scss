@@ -7,13 +7,7 @@
   border-top: 1px dashed var(--jtc-border-color);
   margin-left: 0.5rem; // Indent the whole TOC block slightly under its parent nav item
   padding-left: 0.5rem;
-}
-
-.page-toc-container .text-delta { // Title "On this page"
-  margin-bottom: 0.5rem;
-  font-size: 0.9em; // Make title slightly smaller
-  font-weight: bold;
-  color: var(--jtc-text-color);
+  padding-top: 0.25rem; // Reduced padding-top as title is removed
 }
 
 // Basis-Styling für alle TOC Listen und Listenelemente

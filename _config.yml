@@ -9,6 +9,7 @@ url: "https://gem-cp.github.io"
 baseurl: "/md-toc"
 
 # Logo
+
 logo: "/images/md-toc-logo.png"
 favicon_ico: "/images/md-toc-logo.png"
 
