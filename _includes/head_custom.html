@@ -1,1 +1,115 @@
-<script src="{{ '/assets/js/page-toc.js' | relative_url }}" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const toc = document.querySelector(".toc"); // Rechtes TOC
+  const sidebar = document.querySelector(".side-bar");
+
+  if (toc && sidebar) {
+    const clonedToc = toc.cloneNode(true);
+    clonedToc.classList.add("toc-in-sidebar");
+
+    // Optional: TOC-Titel
+    const tocTitle = document.createElement("h2");
+    tocTitle.innerText = "Inhalt"; // "Content" or "On this page" might be better English placeholder
+    tocTitle.classList.add("nav__title"); // This class might need adjustment based on theme's sidebar title styles
+
+    // Container in Sidebar einfügen
+    const container = document.createElement("nav");
+    container.classList.add("nav-list", "nav-list--toc"); // Base classes for styling
+    container.appendChild(tocTitle);
+    container.appendChild(clonedToc);
+
+    // Later steps will refine this:
+    // sidebar.appendChild(container);
+
+    const activeListItem = sidebar.querySelector(".nav-list-item.active");
+    if (activeListItem) {
+      activeListItem.appendChild(container);
+      document.body.classList.add("js-toc-sidebar"); // Add class to body if ToC is moved
+    } else {
+      sidebar.appendChild(container);
+      document.body.classList.add("js-toc-sidebar"); // Still add class if appended to sidebar end
+      console.warn("Cloned ToC: No active .nav-list-item found in sidebar. Appending ToC to end of sidebar.");
+    }
+  }
+});
+</script>
+
+<style>
+/* Hide original .toc if sidebar ToC is successfully injected */
+body.js-toc-sidebar .main-content-wrap .toc {
+  display: none;
+}
+
+/* Stil für TOC in Sidebar */
+.nav-list--toc {
+  margin-top: 1rem;
+  padding-left: 0;
+  font-size: 0.9rem;
+}
+
+.nav-list--toc .nav__title {
+  font-size: 0.9em;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.toc-in-sidebar {
+  all: unset;
+  display: block;
+}
+
+.toc-in-sidebar ul {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0; /* Base level UL */
+}
+
+.toc-in-sidebar ul ul { /* Nested ULs for H2, H3 etc. */
+  padding-left: 0.75rem; /* Indentation for nested levels */
+  margin-top: 0.1rem;
+  margin-bottom: 0.1rem;
+}
+
+.toc-in-sidebar li {
+  margin-bottom: 0.1rem;
+}
+
+.toc-in-sidebar a {
+  text-decoration: none;
+  display: block;
+  padding: 0.125rem 0.5rem;
+  /* Attempt to use just-the-docs variables for link colors */
+  color: var(--jtc-nav-link-color, var(--jtc-text-color)); /* Fallback to text color */
+}
+.toc-in-sidebar a:hover {
+  text-decoration: underline;
+  color: var(--jtc-link-hover-color, #0076df); /* Fallback color */
+}
+
+/* Styling for different heading levels based on nesting */
+/* Level 1 (top-most UL in .toc-in-sidebar) */
+.toc-in-sidebar > ul > li > a {
+  font-weight: bold; /* Make top-level ToC items bold */
+  font-size: 1em; /* Relative to .nav-list--toc font-size (0.9rem) */
+}
+
+/* Level 2 (first nested UL) */
+.toc-in-sidebar > ul > li > ul > li > a {
+  font-size: 0.95em;
+}
+
+/* Level 3 (second nested UL) */
+.toc-in-sidebar > ul > li > ul > li > ul > li > a {
+  font-size: 0.9em;
+  /* color: var(--jtc-text-color-light); */ /* Example for lighter color for deeper levels */
+}
+
+/* Level 4 (third nested UL) */
+.toc-in-sidebar > ul > li > ul > li > ul > li > ul > li > a {
+  font-size: 0.85em;
+  /* color: var(--jtc-text-color-lighter); */
+}
+/* Add more levels if needed */
+
+</style>
