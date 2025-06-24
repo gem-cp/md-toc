@@ -1,19 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
   // Guard against multiple executions if script is somehow loaded/run multiple times
   if (document.getElementById('page-toc-nav-container')) {
+    console.log('Page TOC: Already initialized, exiting.');
     return;
   }
+  console.log('Page TOC: Initializing.');
 
   const mainContent = document.querySelector('.main-content');
   if (!mainContent) {
+    console.error('Page TOC: .main-content element not found. TOC cannot be built.');
     return;
   }
+  console.log('Page TOC: .main-content element found:', mainContent);
 
   const headers = mainContent.querySelectorAll('h1, h2, h3, h4, h5, h6');
+  console.log('Page TOC: Found headers querySelectorAll:', headers); // Log the NodeList itself
   if (headers.length === 0) {
+    console.log('Page TOC: No h1-h6 headers found in .main-content. Nothing to build for TOC.');
     // No headers, so no TOC to build or place
     return;
   }
+  console.log(`Page TOC: Found ${headers.length} header(s).`);
 
   // Create the TOC structure dynamically
   const tocWrapperDiv = document.createElement('div');
@@ -35,15 +42,25 @@ document.addEventListener('DOMContentLoaded', function() {
   // `parentStack[0]` is `tocNav` (the root list for the TOC).
   const parentStack = [tocNav];
 
-  headers.forEach(header => {
+  headers.forEach((header, index) => {
     const id = header.id;
-    // console.log('Processing header:', header.tagName, 'ID:', id, 'Text:', header.textContent);
+    console.log(`Page TOC: Processing header ${index + 1}/${headers.length}:`, {
+      tagName: header.tagName,
+      id: id,
+      textContent: header.textContent ? header.textContent.trim() : 'NO TEXT CONTENT'
+    });
+
     if (!id) {
-      // console.log('Skipping header due to missing ID:', header.textContent);
-      return;
+      // If no ID, try to generate one and set it on the header
+      const tempId = `toc-generated-${index}`;
+      console.warn(`Page TOC: Header "${header.textContent ? header.textContent.trim() : 'NO TEXT CONTENT'}" has no ID. Generating temporary ID: ${tempId}`);
+      header.id = tempId;
+      id = tempId; // Use the new ID
+      // Do not return; proceed with the generated ID.
     }
 
     const level = parseInt(header.tagName.substring(1)); // Actual H level (1-6)
+    console.log(`Page TOC: Header level: ${level}`);
     // console.log('Level:', level, 'Current parentStack depth:', parentStack.length);
     // console.log('Parent stack before adjustment:', parentStack.map(ul => ul.tagName + (ul.id ? '#' + ul.id : '')));
 
