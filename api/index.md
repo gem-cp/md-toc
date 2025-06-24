@@ -4,6 +4,7 @@ nav_order: 2
 has_children: true
 parent: md-toc
 permalink: /api/
+has_toc: true
 ---
 
 ![md-toc logo]({{ site.baseurl }}/images/md-toc-logo.png)
