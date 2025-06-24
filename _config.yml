@@ -1,23 +1,15 @@
 # Titel und Beschreibung Ihrer Seite
-title: ZETA
-description: Dokumentation für das ZETA-Projekt der gematik.
-#url: "https://gematik.github.io" # Wichtig: Passen Sie dies an, sobald die Seite live ist
-#baseurl: "/ZETA"
+title: md-toc
+description: 
 
-# Theme-Auswahl: Just the Docs
-# Wir verwenden remote_theme, damit GitHub Pages das Theme automatisch bezieht.
+# Theme: Just the Docs
 remote_theme: just-the-docs/just-the-docs
 
-#
-
-# URL-Konfiguration für GitHub Pages
-# WICHTIG: url ist NUR die Domain, baseurl ist das Repository
 url: "https://gem-cp.github.io"
 baseurl: "/md-toc"
 
-# Logo im Header
-logo: "/images/toc-logo.png" # Pfad zu Ihrem Logo, ggf. anpassen
-favicon_ico: "/images/toc-logo.png" # Pfad zu Ihrem Favicon, ggf. anpassen
+# Logo
+logo: "/images/toc-logo.png"
+favicon_ico: "/images/toc-logo.png"
 
-# Suchfunktion aktivieren (empfohlen)
 search_enabled: true
