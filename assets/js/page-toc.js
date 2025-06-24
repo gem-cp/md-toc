@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Guard against multiple executions if script is somehow loaded/run multiple times
+  if (document.getElementById('page-toc-nav-container')) {
+    return;
+  }
+
   const mainContent = document.querySelector('.main-content');
   if (!mainContent) {
     return;
@@ -64,16 +69,12 @@ document.addEventListener('DOMContentLoaded', function() {
           newUl.classList.add('nav-list', 'nav-list-child-list', `nav-list-level-${i + 1}`); // i+1 is the H-level this UL is for
           lastListItemInPreviousList.appendChild(newUl);
           parentStack.push(newUl);
-          // Update lastListItemInPreviousList to the newUl itself, so the *next* newUl (if any) is appended to this one.
-          // No, that's not right. The newUl is pushed to stack. The next LI will go into it.
-          // The lastListItemInPreviousList reference is for *its* children.
-          lastListItemInPreviousList = newUl; // This seems wrong. The new UL is for the *next* level.
-                                          // Let's stick to the previous logic for appending to last LI of current parent.
+          // The bug was here: lastListItemInPreviousList = newUl;
+          // Correct approach is that lastListItemInPreviousList remains the LI to which newUl was appended.
+          // The newUl itself is added to parentStack to become the parent for the next level of items.
         }
-         // Re-fetch the last list item from the *current* deepest list in parentStack
-         // as it might have been updated by adding new ULs.
-        lastListItemInPreviousList = parentStack[parentStack.length - 1].lastElementChild;
-
+        // No need to re-fetch lastListItemInPreviousList here, its role for this iteration is done.
+        // The parentStack has been updated with the new UL.
       } else if (parentStack.length === 1 && parentStack[0] === tocNav) {
         // This means we are trying to create a nested list directly under tocNav
         // without a preceding H1 (or any header at level `parentStack.length`).
