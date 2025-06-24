@@ -29,6 +29,7 @@
   font-weight: bold;
   font-size: 0.92em; // Slightly smaller than main nav items
   padding: 0.1rem 0;
+  padding-left: 0.5rem !important; // Base padding for H1
   display: block;
 }
 
@@ -44,6 +45,7 @@
 .page-toc-container .nav-list-item-level-2 > .nav-list-link {
   font-size: 0.9em;
   padding: 0.1rem 0;
+  padding-left: 1rem !important; // Indent H2
   display: block;
 }
 
@@ -60,6 +62,7 @@
   font-size: 0.88em;
   color: var(--jtc-text-color-light);
   padding: 0.1rem 0;
+  padding-left: 1.5rem !important; // Indent H3
   display: block;
 }
 
@@ -76,6 +79,7 @@
   font-size: 0.86em;
   color: var(--jtc-text-color-lighter);
   padding: 0.1rem 0;
+  padding-left: 2rem !important; // Indent H4
   display: block;
 }
 
@@ -92,6 +96,7 @@
   font-size: 0.84em;
   color: var(--jtc-text-color-lighter);
   padding: 0.1rem 0;
+  padding-left: 2.5rem !important; // Indent H5
   display: block;
 }
 
@@ -108,13 +113,14 @@
   font-size: 0.82em;
   color: var(--jtc-text-color-lighter);
   padding: 0.1rem 0;
+  padding-left: 3rem !important; // Indent H6
   display: block;
 }
 
 // Ensure links within TOC don't inherit global nav link styles that might conflict
 .page-toc-container .nav-list-link {
   border-left: none; // Override potential theme border on active/hover nav links
-  padding-left: 0.25rem; // Add some padding to the link text itself
+  // padding-left: 0.25rem; // This will be overridden by level specific padding-left
 }
 .page-toc-container .nav-list-link:hover,
 .page-toc-container .nav-list-link.active { // Assuming we might add 'active' on scroll

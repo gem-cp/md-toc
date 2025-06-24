@@ -105,13 +105,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (activeNavLink) {
       let parentLi = activeNavLink.closest('.nav-list-item');
       if (parentLi) {
-        // Insert the TOC container after the parent LI of the active link
-        parentLi.parentNode.insertBefore(tocWrapperDiv, parentLi.nextSibling);
+        // Insert the TOC container as the last child of the parent LI of the active link
+        parentLi.appendChild(tocWrapperDiv);
       } else {
         // Fallback: if somehow active link is not in an LI, append to sidebar nav container
         // This is unlikely with just-the-docs structure.
         // Or, could append to a default location if no active link found.
         // For now, if no parentLi, it won't be inserted.
+        // console.log("Page TOC: Active nav link found, but not within a .nav-list-item.");
       }
     } else {
       // Fallback: if no active link is found (e.g. on homepage not in nav),
