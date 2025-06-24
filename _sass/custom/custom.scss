@@ -1,23 +1,129 @@
-// Unser Container für das Seiten-TOC
+// Container for the page TOC when inserted into the sidebar
 .page-toc-container {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--jtc-border-color);
+  margin-top: 0.5rem; // Space above the TOC title
+  margin-bottom: 1rem; // Space below the TOC content
+  padding-top: 0.5rem;
+  // Use a slightly different border or background to distinguish from main nav items
+  border-top: 1px dashed var(--jtc-border-color);
+  margin-left: 0.5rem; // Indent the whole TOC block slightly under its parent nav item
+  padding-left: 0.5rem;
 }
 
-// Hierarchische Einrückung für die H3-Unterpunkte
-.nav-list-child-list {
-  padding-left: 1rem; 
-  margin-top: 0.25rem;
-  // Optische Linie links, um die Hierarchie zu verdeutlichen
+.page-toc-container .text-delta { // Title "On this page"
+  margin-bottom: 0.5rem;
+  font-size: 0.9em; // Make title slightly smaller
+  font-weight: bold;
+  color: var(--jtc-text-color);
+}
+
+// Basis-Styling für alle TOC Listen und Listenelemente
+.page-toc-container .nav-list {
+  padding-left: 0; // Reset padding as we use margin on ULs for indentation
+  list-style: none;
+}
+
+.page-toc-container .nav-list-item {
+  // No specific base style needed here now
+}
+
+// Hierarchische Einrückung und Styling für die verschiedenen Ebenen
+// ul.nav-list-level-N bezieht sich auf das UL-Element für H(N) Überschriften
+// .nav-list-item-level-N bezieht sich auf das LI-Element für eine H(N) Überschrift
+
+// H1 (Level 1) - Links direkt in der <nav id="page-toc-nav">
+.page-toc-container > nav > .nav-list-item-level-1 > .nav-list-link {
+  font-weight: bold;
+  font-size: 0.92em; // Slightly smaller than main nav items
+  padding: 0.1rem 0;
+  display: block;
+}
+
+// H2 (Level 2) - First level of nesting
+.page-toc-container ul.nav-list-level-2 { // This is the UL for H2 items
+  margin-left: 0.5rem; // Indent the list
+  padding-left: 0.5rem;
   border-left: 1px solid var(--jtc-border-color);
-  margin-left: 0.5rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  margin-top: 0.1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+.page-toc-container .nav-list-item-level-2 > .nav-list-link {
+  font-size: 0.9em;
+  padding: 0.1rem 0;
+  display: block;
 }
 
-// Kleinere Schrift für die Unterpunkte, damit es nicht überladen wirkt
-.nav-list-child-list .nav-list-link {
-    font-size: 0.92em;
-    color: var(--jtc-link-color);
+// H3 (Level 3)
+.page-toc-container ul.nav-list-level-3 {
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--jtc-border-color);
+  margin-top: 0.1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+.page-toc-container .nav-list-item-level-3 > .nav-list-link {
+  font-size: 0.88em;
+  color: var(--jtc-text-color-light);
+  padding: 0.1rem 0;
+  display: block;
+}
+
+// H4 (Level 4)
+.page-toc-container ul.nav-list-level-4 {
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--jtc-border-color);
+  margin-top: 0.1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+.page-toc-container .nav-list-item-level-4 > .nav-list-link {
+  font-size: 0.86em;
+  color: var(--jtc-text-color-lighter);
+  padding: 0.1rem 0;
+  display: block;
+}
+
+// H5 (Level 5)
+.page-toc-container ul.nav-list-level-5 {
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--jtc-border-color);
+  margin-top: 0.1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+.page-toc-container .nav-list-item-level-5 > .nav-list-link {
+  font-size: 0.84em;
+  color: var(--jtc-text-color-lighter);
+  padding: 0.1rem 0;
+  display: block;
+}
+
+// H6 (Level 6)
+.page-toc-container ul.nav-list-level-6 {
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--jtc-border-color);
+  margin-top: 0.1rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+}
+.page-toc-container .nav-list-item-level-6 > .nav-list-link {
+  font-size: 0.82em;
+  color: var(--jtc-text-color-lighter);
+  padding: 0.1rem 0;
+  display: block;
+}
+
+// Ensure links within TOC don't inherit global nav link styles that might conflict
+.page-toc-container .nav-list-link {
+  border-left: none; // Override potential theme border on active/hover nav links
+  padding-left: 0.25rem; // Add some padding to the link text itself
+}
+.page-toc-container .nav-list-link:hover,
+.page-toc-container .nav-list-link.active { // Assuming we might add 'active' on scroll
+  text-decoration: underline;
+  // color: var(--jtc-link-hover-color); // Optional: specific hover color
 }
