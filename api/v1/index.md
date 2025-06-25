@@ -10,6 +10,15 @@ nav_order: 1
 
 This is the main page of the `md-toc` API v1 documentation.
 
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
 ## api v1 heading1
 
 Text for heading1.
