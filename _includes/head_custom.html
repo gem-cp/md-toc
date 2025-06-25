@@ -84,19 +84,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <style>
 /* --- Styling for Site Title next to Logo --- */
+/* >> CHANGED: Added flex-grow and min-width to allow the title container to expand */
 .site-header a.site-title.has-logo-and-text {
   display: flex;
   align-items: center;
+  flex-grow: 1; /* Allows this element to take up available space */
+  min-width: 0; /* Prevents flexbox overflow issues, allowing truncation to work if needed */
 }
 
 .site-title-text {
   margin-left: 0.75rem;
-  /* >> MODIFIED: Smaller font, slightly bold, and forced to a single line */
   font-size: 1.1rem;
   font-weight: 600;
-  white-space: nowrap; /* Prevents the title from wrapping to a new line */
-  overflow: hidden; /* Hides any part of the title that doesn't fit */
-  text-overflow: ellipsis; /* Adds "..." if the title is too long for the space */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* --- Base ToC Rules --- */
@@ -117,37 +119,35 @@ body.js-toc-sidebar .main-content-wrap .toc {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--jtc-text-color-muted, #6c757d);
-  /* >> MODIFIED: Adjusted padding to align with the new tree structure */
   padding-left: 0.8rem;
   margin-bottom: 0.75rem;
+  /* >> CHANGED: Reduced top margin and padding to feel more connected to the active page */
   border-top: 1px solid var(--jtc-border-color, #dee2e6); 
-  padding-top: 1rem;
-  margin-top: 1rem;
+  padding-top: 0.75rem;
+  margin-top: 0.75rem;
 }
 
-/* >> MODIFIED: Resetting initial padding. Indentation will now be handled by nested ULs only. */
 .toc-in-sidebar {
   all: unset;
   display: block;
-  list-style-type: none; /* Explicitly set list style to none here */
+  list-style-type: none;
 }
 
-/* >> MODIFIED: The base indentation for all lists is now handled here. */
 .toc-in-sidebar ul {
   list-style-type: none;
   margin: 0;
-  padding-left: 1.2rem; /* This creates the space for our new tree lines */
+  padding-left: 1.2rem;
 }
 
 .toc-in-sidebar li {
   margin: 0;
-  position: relative; /* Required for positioning the new lines */
+  position: relative;
 }
 
 .toc-in-sidebar a {
   text-decoration: none;
   display: block; 
-  padding: 0.2rem 0.5rem; /* Slightly more vertical padding */
+  padding: 0.2rem 0.5rem;
   color: var(--jtc-nav-link-color, var(--jtc-text-color));
 }
 .toc-in-sidebar a:hover {
@@ -155,47 +155,37 @@ body.js-toc-sidebar .main-content-wrap .toc {
   color: var(--jtc-link-hover-color, #0076df);
 }
 
-/* --- >> NEW: Beautiful Tree Lines --- */
-/* Remove old line styles */
-.toc-in-sidebar li > ul::before, 
-.toc-in-sidebar li > ul > li::before {
-  display: none;
-}
-
-/* Draw the vertical line using the ::after pseudo-element */
+/* --- Beautiful Tree Lines --- */
 .toc-in-sidebar ul li::after {
   content: '';
   position: absolute;
   top: 0;
-  left: -0.7rem; /* Positioned within the UL's padding */
+  left: -0.7rem;
   width: 1px;
   height: 100%;
-  background: var(--jtc-border-color, #e1e4e8); /* A slightly softer color */
+  background: var(--jtc-border-color, #e1e4e8);
 }
 
-/* Draw the horizontal connector using the ::before pseudo-element */
 .toc-in-sidebar ul li::before {
   content: '';
   position: absolute;
-  top: 0.8rem; /* Aligns with the middle of the text line */
-  left: -0.7rem; /* Aligns with the vertical line */
-  width: 0.7rem; /* The length of the horizontal line */
+  top: 0.8rem;
+  left: -0.7rem;
+  width: 0.7rem;
   height: 1px;
   background: var(--jtc-border-color, #e1e4e8);
 }
 
-/* Stop the vertical line for the LAST item in a list */
 .toc-in-sidebar ul li:last-child::after {
-  height: 0.8rem; /* Stops the line at the horizontal connector */
+  height: 0.8rem;
 }
 
-/* Ensure top-level items (direct children of .toc-in-sidebar) don't get lines */
 .toc-in-sidebar > li::before,
 .toc-in-sidebar > li::after {
     display: none;
 }
 
-/* Hierarchical styling for links based on nesting depth (Unchanged) */
+/* --- Hierarchical Font Styling (Unchanged) --- */
 .toc-in-sidebar > li > a { font-size: 1em; }
 .toc-in-sidebar > li > ul > li > a { font-size: 0.95em; }
 .toc-in-sidebar > li > ul > li > ul > li > a { font-size: 0.9em; }
