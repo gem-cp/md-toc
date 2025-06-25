@@ -1,17 +1,37 @@
 <script>
 {% raw %}
 document.addEventListener("DOMContentLoaded", function () {
+  const siteTitleContainer = document.querySelector(".site-header .site-title");
+  const siteLogo = document.querySelector(".site-logo");
+
+  if (siteTitleContainer && siteLogo) {
+    const siteTitleText = siteLogo.getAttribute("aria-label");
+    if (siteTitleText) {
+      const titleSpan = document.createElement("span");
+      titleSpan.className = "site-title-text";
+      titleSpan.textContent = siteTitleText;
+      siteTitleContainer.appendChild(titleSpan);
+      siteTitleContainer.classList.add("has-logo-and-text");
+    }
+  }
+
   const inPageTocList = document.querySelector("#markdown-toc");
   const sidebar = document.querySelector(".side-bar");
 
   if (inPageTocList && sidebar) {
     const detailsParent = inPageTocList.closest('details');
-
     inPageTocList.classList.add("toc-in-sidebar");
 
     const tocContainerInSidebar = document.createElement("nav");
     tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+
+    const tocTitle = document.createElement("span");
+    tocTitle.textContent = "On this page";
+    tocTitle.classList.add("toc-sidebar-title");
+    tocContainerInSidebar.appendChild(tocTitle);
+    
     tocContainerInSidebar.appendChild(inPageTocList);
+
     const activeListItem = sidebar.querySelector(".nav-list-item.active");
     if (activeListItem) {
       activeListItem.appendChild(tocContainerInSidebar);
@@ -38,6 +58,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const tocContainerInSidebar = document.createElement("nav");
       tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+      
+      const tocTitle = document.createElement("span");
+      tocTitle.textContent = "On this page";
+      tocTitle.classList.add("toc-sidebar-title");
+      tocContainerInSidebar.appendChild(tocTitle);
+
       tocContainerInSidebar.appendChild(clonedThemeToc);
 
       const activeListItem = sidebar.querySelector(".nav-list-item.active");
@@ -57,46 +83,63 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <style>
-/* Hide original .toc if sidebar ToC is successfully injected and body has class */
+/* --- NEW: Styling for Site Title next to Logo --- */
+.site-header a.site-title.has-logo-and-text {
+  display: flex;
+  align-items: center; /* Vertically aligns logo and text */
+}
+
+.site-title-text {
+  margin-left: 0.75rem; /* Space between logo and text */
+}
+
+/* Hide original .toc if sidebar ToC is successfully injected */
 body.js-toc-sidebar .main-content-wrap .toc {
   display: none;
 }
 
 /* Styling for the <nav> container of the ToC in the sidebar */
 .nav-list--toc {
-  margin-top: 1rem; 
-  padding-left: 0; /* Resetting this, primary indent will be on .toc-in-sidebar */
-  font-size: 0.9rem; /* Base font size for ToC items */
+  margin-top: 0; /* Resetting this, space will be handled by the title's border */
+  padding-left: 0;
+  font-size: 0.9rem;
 }
 
-/* Styling for the "Inhalt" title (H2) - Element removed from JS */
-/*
-.nav-list--toc .nav__title {
-  font-size: 0.9em; 
-  font-weight: bold;
+/* --- NEW: Styling for the ToC Title ("On this page") --- */
+.toc-sidebar-title {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600; /* Bolder than normal text */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--jtc-text-color-muted, #6c757d); /* Use theme's muted color variable */
+  padding-left: 1.2rem; /* Indent the title slightly */
   margin-bottom: 0.5rem;
-  padding-left: 0.5rem; 
+  /* This border is the key visual separator */
+  border-top: 1px solid var(--jtc-border-color, #dee2e6); 
+  padding-top: 1rem;
+  margin-top: 1rem;
 }
-*/
 
-/* Styling for the UL element that is the ToC itself (either #markdown-toc or cloned .toc) */
+/* Styling for the UL element that is the ToC itself */
 .toc-in-sidebar {
-  all: unset; /* Remove browser default list styles */
-  display: block; /* Ensure it behaves as a block element */
-  padding-left: 1.5rem; /* Initial indent for the ToC list itself */
+  all: unset;
+  display: block;
+  /* MODIFIED: Increased initial indent to push the entire ToC block further right */
+  padding-left: 2rem;
 }
 
 /* Styling for all UL elements within the .toc-in-sidebar */
 .toc-in-sidebar ul {
   list-style-type: none;
   margin: 0;
-  padding-left: 0; /* Base level ULs (like .toc-in-sidebar itself) have no indent */
+  padding-left: 0;
 }
 
-/* Indentation for nested ULs (representing deeper heading levels) */
+/* MODIFIED: Increased indent step for sub-levels for better hierarchy */
 .toc-in-sidebar ul ul { 
-  padding-left: 1.25rem; /* Further increased indent step for sub-levels */
-  margin-top: 0.1rem; /* Small spacing for nested lists */
+  padding-left: 1.4rem; 
+  margin-top: 0.1rem;
   margin-bottom: 0.1rem;
 }
 
@@ -109,85 +152,46 @@ body.js-toc-sidebar .main-content-wrap .toc {
 .toc-in-sidebar a {
   text-decoration: none;
   display: block; 
-  padding: 0.125rem 0.5rem; /* Padding for clickable area */
-  color: var(--jtc-nav-link-color, var(--jtc-text-color)); /* Use theme variables with fallback */
+  padding: 0.125rem 0.5rem;
+  color: var(--jtc-nav-link-color, var(--jtc-text-color));
 }
 .toc-in-sidebar a:hover {
   text-decoration: underline;
-  color: var(--jtc-link-hover-color, #0076df); /* Use theme variable with fallback */
+  color: var(--jtc-link-hover-color, #0076df);
 }
 
-/* Connection lines for tree-view effect */
+/* Connection lines for tree-view effect (Unchanged) */
 .toc-in-sidebar ul,
 .toc-in-sidebar li {
-  position: relative; /* Required for positioning pseudo-elements */
+  position: relative;
 }
-
-/* Vertical line for all ULs that are children of an LI (i.e., all nested lists) */
 .toc-in-sidebar li > ul::before {
   content: "";
   position: absolute;
-  left: -0.6em; /* Position left of the padding of the li > a */
-               /* This value may need adjustment based on actual padding/font of parent LI's A tag */
-  top: -0.4em;   /* Start slightly above the first item */
-  bottom: 0.2em; /* End slightly below the last item */
+  left: -0.6em;
+  top: -0.4em;
+  bottom: 0.2em;
   width: 1px;
-  background-color: #ddd; /* Line color */
+  background-color: #ddd;
 }
-
-/* Horizontal connector for LI items that have a preceding vertical line from their parent UL */
-.toc-in-sidebar li > ul > li::before,
-.toc-in-sidebar > li > ul > li::before { /* Covers LIs in the first nested UL */
+.toc-in-sidebar li > ul > li::before {
     content: "";
     position: absolute;
-    left: -0.6em; /* Align with the UL's vertical line */
-    top: 0.7em;    /* Adjust for vertical centering against text (approx half line-height) */
-    width: 0.6em;  /* Length of the horizontal line, adjust as needed */
+    left: -0.6em;
+    top: 0.7em;
+    width: 0.6em;
     height: 1px;
-    background-color: #ddd; /* Line color */
+    background-color: #ddd;
 }
-
-/* Remove horizontal connector for top-level LIs if .toc-in-sidebar is the very first UL */
-/* (This selector might not be needed if the above is specific enough) */
-/* .toc-in-sidebar > li::before { display: none; } */
-
-/* Remove vertical line from the main .toc-in-sidebar UL itself if it were to get one */
-.toc-in-sidebar::before, .toc-in-sidebar::after { /* Ensure the root UL doesn't get lines */
+.toc-in-sidebar::before, .toc-in-sidebar::after {
     display:none !important;
 }
 
-
-/* Hierarchical styling for links based on nesting depth */
-/* .toc-in-sidebar is the main UL itself */
-
-/* Level 1 links (direct LI children of .toc-in-sidebar) */
-.toc-in-sidebar > li > a {
-  /* font-weight: bold; */ /* Removed per user request */
-  font-size: 1em; /* Relative to .nav-list--toc's font-size */
-}
-
-/* Level 2 links (links within the first level of nested ULs) */
-.toc-in-sidebar > li > ul > li > a {
-  font-size: 0.95em; /* Slightly smaller */
-}
-
-/* Level 3 links */
-.toc-in-sidebar > li > ul > li > ul > li > a {
-  font-size: 0.9em;
-}
-
-/* Level 4 links */
-.toc-in-sidebar > li > ul > li > ul > li > ul > li > a {
-  font-size: 0.85em;
-}
-
-/* Level 5 links */
-.toc-in-sidebar > li > ul > li > ul > li > ul > li > ul > li > a {
-  font-size: 0.80em;
-}
-
-/* Level 6 links */
-.toc-in-sidebar > li > ul > li > ul > li > ul > li > ul > li > ul > li > a {
-  font-size: 0.75em;
-}
+/* Hierarchical styling for links based on nesting depth (Unchanged) */
+.toc-in-sidebar > li > a { font-size: 1em; }
+.toc-in-sidebar > li > ul > li > a { font-size: 0.95em; }
+.toc-in-sidebar > li > ul > li > ul > li > a { font-size: 0.9em; }
+.toc-in-sidebar > li > ul > li > ul > li > ul > li > a { font-size: 0.85em; }
+.toc-in-sidebar > li > ul > li > ul > li > ul > li > ul > li > a { font-size: 0.80em; }
+.toc-in-sidebar > li > ul > li > ul > li > ul > li > ul > li > ul > li > a { font-size: 0.75em; }
 </style>
