@@ -2,7 +2,6 @@
 title: md-toc api v1
 parent: md-toc api versions
 nav_order: 1
-toc: true
 ---
 
 ![md-toc logo]({{ site.baseurl }}/images/md-toc-logo.png)
@@ -10,6 +9,16 @@ toc: true
 # md-toc api v1
 
 This is the main page of the `md-toc` API v1 documentation.
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
 
 ## api v1 heading1
 
