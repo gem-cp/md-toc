@@ -9,13 +9,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     inPageTocList.classList.add("toc-in-sidebar");
 
-    const tocTitleElement = document.createElement("h2");
-    tocTitleElement.innerText = "Inhalt";
-    tocTitleElement.classList.add("nav__title");
+    // const tocTitleElement = document.createElement("h2"); // Removed
+    // tocTitleElement.innerText = "Inhalt"; // Removed
+    // tocTitleElement.classList.add("nav__title"); // Removed
 
     const tocContainerInSidebar = document.createElement("nav");
     tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
-    tocContainerInSidebar.appendChild(tocTitleElement);
+    // tocContainerInSidebar.appendChild(tocTitleElement); // Removed
+
     tocContainerInSidebar.appendChild(inPageTocList);
     const activeListItem = sidebar.querySelector(".nav-list-item.active");
     if (activeListItem) {
@@ -33,7 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.classList.add("js-toc-sidebar");
 
   } else if (sidebar) {
-    const themeToc = document.querySelector(".toc"); 
+    const themeToc = document.querySelector(".toc");
+
     if (themeToc) {
       if (console && console.log) {
         console.log("Sidebar ToC: #markdown-toc not found, attempting to use theme's .toc element.");
@@ -41,13 +43,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const clonedThemeToc = themeToc.cloneNode(true);
       clonedThemeToc.classList.add("toc-in-sidebar");
 
-      const tocTitleElement = document.createElement("h2");
-      tocTitleElement.innerText = "Inhalt";
-      tocTitleElement.classList.add("nav__title");
+      // const tocTitleElement = document.createElement("h2"); // Removed
+      // tocTitleElement.innerText = "Inhalt"; // Removed
+      // tocTitleElement.classList.add("nav__title"); // Removed
 
       const tocContainerInSidebar = document.createElement("nav");
       tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
-      tocContainerInSidebar.appendChild(tocTitleElement);
+      // tocContainerInSidebar.appendChild(tocTitleElement); // Removed
       tocContainerInSidebar.appendChild(clonedThemeToc);
 
       const activeListItem = sidebar.querySelector(".nav-list-item.active");
@@ -74,8 +76,8 @@ body.js-toc-sidebar .main-content-wrap .toc {
 
 /* Styling for the <nav> container of the ToC in the sidebar */
 .nav-list--toc {
-  margin-top: 1rem; 
-  padding-left: 0; 
+  margin-top: 1rem;
+  padding-left: 0;
   font-size: 0.9rem; /* Base font size for ToC items */
 }
 
@@ -101,8 +103,8 @@ body.js-toc-sidebar .main-content-wrap .toc {
 }
 
 /* Indentation for nested ULs (representing deeper heading levels) */
-.toc-in-sidebar ul ul { 
-  padding-left: 0.75rem; 
+.toc-in-sidebar ul ul {
+  padding-left: 0.75rem;
   margin-top: 0.1rem; /* Small spacing for nested lists */
   margin-bottom: 0.1rem;
 }
@@ -115,7 +117,7 @@ body.js-toc-sidebar .main-content-wrap .toc {
 /* Styling for A (link) elements within the .toc-in-sidebar */
 .toc-in-sidebar a {
   text-decoration: none;
-  display: block; 
+  display: block;
   padding: 0.125rem 0.5rem; /* Padding for clickable area */
   color: var(--jtc-nav-link-color, var(--jtc-text-color)); /* Use theme variables with fallback */
 }
@@ -129,7 +131,7 @@ body.js-toc-sidebar .main-content-wrap .toc {
 
 /* Level 1 links (direct LI children of .toc-in-sidebar) */
 .toc-in-sidebar > li > a {
-  font-weight: bold; 
+  font-weight: bold;
   font-size: 1em; /* Relative to .nav-list--toc's font-size */
 }
 
