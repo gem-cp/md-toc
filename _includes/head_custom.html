@@ -3,8 +3,8 @@
 document.addEventListener("DOMContentLoaded", function () {
   // Try to find the user's in-page ToC list first (#markdown-toc)
   const inPageTocList = document.querySelector("#markdown-toc");
-  const sidebar = document.querySelector(".side-bar");
-  /*
+  const sidebar = document.querySelector(".site-nav");
+
   if (inPageTocList && sidebar) {
     // Case 1: User's #markdown-toc is found
     const detailsParent = inPageTocList.closest('details');
@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
       document.body.classList.add("js-toc-sidebar"); // This class helps CSS hide the original .toc
     }
   }
-  */
 });
 {% endraw %}
 </script>
