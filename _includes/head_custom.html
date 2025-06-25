@@ -1,14 +1,22 @@
 <script>
 {% raw %}
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Attempting to select #markdown-toc");
-  const mt = document.querySelector("#markdown-toc");
-  if (mt) {
-    console.log("Found #markdown-toc:", mt);
+  console.log("HEAD_CUSTOM_SCRIPT: DOMContentLoaded event fired.");
+  
+  const inPageTocList = document.querySelector("#markdown-toc");
+  if (inPageTocList) {
+    console.log("HEAD_CUSTOM_SCRIPT: Found #markdown-toc element:", inPageTocList);
   } else {
-    console.log("#markdown-toc NOT found.");
+    console.log("HEAD_CUSTOM_SCRIPT: #markdown-toc element NOT found.");
   }
+
+  const sidebar = document.querySelector(".side-bar");
+  if (sidebar) {
+    console.log("HEAD_CUSTOM_SCRIPT: Found .side-bar element:", sidebar);
+  } else {
+    console.log("HEAD_CUSTOM_SCRIPT: .side-bar element NOT found.");
+  }
+  console.log("HEAD_CUSTOM_SCRIPT: Script execution finished.");
 });
 {% endraw %}
 </script>
-<!-- NO <style> block for this test -->
