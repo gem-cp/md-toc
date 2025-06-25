@@ -69,6 +69,16 @@ body.js-toc-sidebar .main-content-wrap .toc {
   font-size: 0.9rem; /* Base font size for ToC items */
 }
 
+/* Styling for the "Inhalt" title (H2) - Element removed from JS */
+/*
+.nav-list--toc .nav__title {
+  font-size: 0.9em; 
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem; 
+}
+*/
+
 /* Styling for the UL element that is the ToC itself (either #markdown-toc or cloned .toc) */
 .toc-in-sidebar {
   all: unset; /* Remove browser default list styles */
@@ -85,7 +95,7 @@ body.js-toc-sidebar .main-content-wrap .toc {
 
 /* Indentation for nested ULs (representing deeper heading levels) */
 .toc-in-sidebar ul ul { 
-  padding-left: 0.75rem; 
+  padding-left: 1rem; /* Increased indent step for sub-levels */
   margin-top: 0.1rem; /* Small spacing for nested lists */
   margin-bottom: 0.1rem;
 }
@@ -106,6 +116,46 @@ body.js-toc-sidebar .main-content-wrap .toc {
   text-decoration: underline;
   color: var(--jtc-link-hover-color, #0076df); /* Use theme variable with fallback */
 }
+
+/* Connection lines for tree-view effect */
+.toc-in-sidebar ul,
+.toc-in-sidebar li {
+  position: relative; /* Required for positioning pseudo-elements */
+}
+
+/* Vertical line for all ULs that are children of an LI (i.e., all nested lists) */
+.toc-in-sidebar li > ul::before {
+  content: "";
+  position: absolute;
+  left: -0.6em; /* Position left of the padding of the li > a */
+               /* This value may need adjustment based on actual padding/font of parent LI's A tag */
+  top: -0.4em;   /* Start slightly above the first item */
+  bottom: 0.2em; /* End slightly below the last item */
+  width: 1px;
+  background-color: #ddd; /* Line color */
+}
+
+/* Horizontal connector for LI items that have a preceding vertical line from their parent UL */
+.toc-in-sidebar li > ul > li::before,
+.toc-in-sidebar > li > ul > li::before { /* Covers LIs in the first nested UL */
+    content: "";
+    position: absolute;
+    left: -0.6em; /* Align with the UL's vertical line */
+    top: 0.7em;    /* Adjust for vertical centering against text (approx half line-height) */
+    width: 0.6em;  /* Length of the horizontal line, adjust as needed */
+    height: 1px;
+    background-color: #ddd; /* Line color */
+}
+
+/* Remove horizontal connector for top-level LIs if .toc-in-sidebar is the very first UL */
+/* (This selector might not be needed if the above is specific enough) */
+/* .toc-in-sidebar > li::before { display: none; } */
+
+/* Remove vertical line from the main .toc-in-sidebar UL itself if it were to get one */
+.toc-in-sidebar::before, .toc-in-sidebar::after { /* Ensure the root UL doesn't get lines */
+    display:none !important;
+}
+
 
 /* Hierarchical styling for links based on nesting depth */
 /* .toc-in-sidebar is the main UL itself */
