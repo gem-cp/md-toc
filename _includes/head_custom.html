@@ -83,76 +83,71 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <style>
-/* --- NEW: Styling for Site Title next to Logo --- */
+/* --- Styling for Site Title next to Logo --- */
 .site-header a.site-title.has-logo-and-text {
   display: flex;
-  align-items: center; /* Vertically aligns logo and text */
+  align-items: center;
 }
 
 .site-title-text {
-  margin-left: 0.75rem; /* Space between logo and text */
+  margin-left: 0.75rem;
+  /* >> MODIFIED: Smaller font, slightly bold, and forced to a single line */
+  font-size: 1.1rem;
+  font-weight: 600;
+  white-space: nowrap; /* Prevents the title from wrapping to a new line */
+  overflow: hidden; /* Hides any part of the title that doesn't fit */
+  text-overflow: ellipsis; /* Adds "..." if the title is too long for the space */
 }
 
-/* Hide original .toc if sidebar ToC is successfully injected */
+/* --- Base ToC Rules --- */
 body.js-toc-sidebar .main-content-wrap .toc {
   display: none;
 }
 
-/* Styling for the <nav> container of the ToC in the sidebar */
 .nav-list--toc {
-  margin-top: 0; /* Resetting this, space will be handled by the title's border */
+  margin-top: 0;
   padding-left: 0;
   font-size: 0.9rem;
 }
 
-/* --- NEW: Styling for the ToC Title ("On this page") --- */
 .toc-sidebar-title {
   display: block;
   font-size: 0.75rem;
-  font-weight: 600; /* Bolder than normal text */
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--jtc-text-color-muted, #6c757d); /* Use theme's muted color variable */
-  padding-left: 1.2rem; /* Indent the title slightly */
-  margin-bottom: 0.5rem;
-  /* This border is the key visual separator */
+  color: var(--jtc-text-color-muted, #6c757d);
+  /* >> MODIFIED: Adjusted padding to align with the new tree structure */
+  padding-left: 0.8rem;
+  margin-bottom: 0.75rem;
   border-top: 1px solid var(--jtc-border-color, #dee2e6); 
   padding-top: 1rem;
   margin-top: 1rem;
 }
 
-/* Styling for the UL element that is the ToC itself */
+/* >> MODIFIED: Resetting initial padding. Indentation will now be handled by nested ULs only. */
 .toc-in-sidebar {
   all: unset;
   display: block;
-  /* MODIFIED: Increased initial indent to push the entire ToC block further right */
-  padding-left: 2rem;
+  list-style-type: none; /* Explicitly set list style to none here */
 }
 
-/* Styling for all UL elements within the .toc-in-sidebar */
+/* >> MODIFIED: The base indentation for all lists is now handled here. */
 .toc-in-sidebar ul {
   list-style-type: none;
   margin: 0;
-  padding-left: 0;
+  padding-left: 1.2rem; /* This creates the space for our new tree lines */
 }
 
-/* MODIFIED: Increased indent step for sub-levels for better hierarchy */
-.toc-in-sidebar ul ul { 
-  padding-left: 1.4rem; 
-  margin-top: 0.1rem;
-  margin-bottom: 0.1rem;
-}
-
-/* Styling for LI elements within the .toc-in-sidebar */
 .toc-in-sidebar li {
-  margin-bottom: 0.1rem; 
+  margin: 0;
+  position: relative; /* Required for positioning the new lines */
 }
 
-/* Styling for A (link) elements within the .toc-in-sidebar */
 .toc-in-sidebar a {
   text-decoration: none;
   display: block; 
-  padding: 0.125rem 0.5rem;
+  padding: 0.2rem 0.5rem; /* Slightly more vertical padding */
   color: var(--jtc-nav-link-color, var(--jtc-text-color));
 }
 .toc-in-sidebar a:hover {
@@ -160,31 +155,44 @@ body.js-toc-sidebar .main-content-wrap .toc {
   color: var(--jtc-link-hover-color, #0076df);
 }
 
-/* Connection lines for tree-view effect (Unchanged) */
-.toc-in-sidebar ul,
-.toc-in-sidebar li {
-  position: relative;
-}
-.toc-in-sidebar li > ul::before {
-  content: "";
-  position: absolute;
-  left: -0.6em;
-  top: -0.4em;
-  bottom: 0.2em;
-  width: 1px;
-  background-color: #ddd;
-}
+/* --- >> NEW: Beautiful Tree Lines --- */
+/* Remove old line styles */
+.toc-in-sidebar li > ul::before, 
 .toc-in-sidebar li > ul > li::before {
-    content: "";
-    position: absolute;
-    left: -0.6em;
-    top: 0.7em;
-    width: 0.6em;
-    height: 1px;
-    background-color: #ddd;
+  display: none;
 }
-.toc-in-sidebar::before, .toc-in-sidebar::after {
-    display:none !important;
+
+/* Draw the vertical line using the ::after pseudo-element */
+.toc-in-sidebar ul li::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -0.7rem; /* Positioned within the UL's padding */
+  width: 1px;
+  height: 100%;
+  background: var(--jtc-border-color, #e1e4e8); /* A slightly softer color */
+}
+
+/* Draw the horizontal connector using the ::before pseudo-element */
+.toc-in-sidebar ul li::before {
+  content: '';
+  position: absolute;
+  top: 0.8rem; /* Aligns with the middle of the text line */
+  left: -0.7rem; /* Aligns with the vertical line */
+  width: 0.7rem; /* The length of the horizontal line */
+  height: 1px;
+  background: var(--jtc-border-color, #e1e4e8);
+}
+
+/* Stop the vertical line for the LAST item in a list */
+.toc-in-sidebar ul li:last-child::after {
+  height: 0.8rem; /* Stops the line at the horizontal connector */
+}
+
+/* Ensure top-level items (direct children of .toc-in-sidebar) don't get lines */
+.toc-in-sidebar > li::before,
+.toc-in-sidebar > li::after {
+    display: none;
 }
 
 /* Hierarchical styling for links based on nesting depth (Unchanged) */
