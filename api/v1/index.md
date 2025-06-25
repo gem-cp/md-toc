@@ -14,7 +14,7 @@ This is the main page of the `md-toc` API v1 documentation.
     Table of contents
   </summary>
   {: .text-delta }
-1. TOC
+- TOC
 {:toc}
 </details>
 

@@ -8,14 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const detailsParent = inPageTocList.closest('details');
 
     inPageTocList.classList.add("toc-in-sidebar");
-
-    const tocTitleElement = document.createElement("h2");
-    tocTitleElement.innerText = "Inhalt";
-    tocTitleElement.classList.add("nav__title");
-
     const tocContainerInSidebar = document.createElement("nav");
     tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
-    tocContainerInSidebar.appendChild(tocTitleElement);
     tocContainerInSidebar.appendChild(inPageTocList);
     const activeListItem = sidebar.querySelector(".nav-list-item.active");
     if (activeListItem) {
@@ -40,14 +34,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       const clonedThemeToc = themeToc.cloneNode(true);
       clonedThemeToc.classList.add("toc-in-sidebar");
-
-      const tocTitleElement = document.createElement("h2");
-      tocTitleElement.innerText = "Inhalt";
-      tocTitleElement.classList.add("nav__title");
-
       const tocContainerInSidebar = document.createElement("nav");
       tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
-      tocContainerInSidebar.appendChild(tocTitleElement);
       tocContainerInSidebar.appendChild(clonedThemeToc);
 
       const activeListItem = sidebar.querySelector(".nav-list-item.active");
@@ -75,35 +63,37 @@ body.js-toc-sidebar .main-content-wrap .toc {
 /* Styling for the <nav> container of the ToC in the sidebar */
 .nav-list--toc {
   margin-top: 1rem; 
-  padding-left: 0; 
+  padding-left: 1rem; /* Indent entire ToC block relative to parent page link */
   font-size: 0.9rem; /* Base font size for ToC items */
 }
 
-/* Styling for the "Inhalt" title (H2) */
+/* Styling for the "Inhalt" title (H2) - This rule will no longer apply as element is removed */
+/* 
 .nav-list--toc .nav__title {
-  font-size: 0.9em; /* Relative to parent .nav-list--toc, so 0.9 * 0.9rem */
+  font-size: 0.9em; 
   font-weight: bold;
   margin-bottom: 0.5rem;
-  padding-left: 0.5rem; /* Align with other potential sidebar items */
+  padding-left: 0.5rem; 
 }
+*/
 
 /* Styling for the UL element that is the ToC itself (either #markdown-toc or cloned .toc) */
 .toc-in-sidebar {
-  all: unset; /* Remove browser default list styles */
-  display: block; /* Ensure it behaves as a block element */
+  all: unset; 
+  display: block; 
 }
 
 /* Styling for all UL elements within the .toc-in-sidebar */
 .toc-in-sidebar ul {
   list-style-type: none;
   margin: 0;
-  padding-left: 0; /* Base level ULs (like .toc-in-sidebar itself) have no indent */
+  padding-left: 0; 
 }
 
 /* Indentation for nested ULs (representing deeper heading levels) */
 .toc-in-sidebar ul ul { 
   padding-left: 0.75rem; 
-  margin-top: 0.1rem; /* Small spacing for nested lists */
+  margin-top: 0.1rem; 
   margin-bottom: 0.1rem;
 }
 
@@ -116,12 +106,12 @@ body.js-toc-sidebar .main-content-wrap .toc {
 .toc-in-sidebar a {
   text-decoration: none;
   display: block; 
-  padding: 0.125rem 0.5rem; /* Padding for clickable area */
-  color: var(--jtc-nav-link-color, var(--jtc-text-color)); /* Use theme variables with fallback */
+  padding: 0.125rem 0.5rem; 
+  color: var(--jtc-nav-link-color, var(--jtc-text-color)); 
 }
 .toc-in-sidebar a:hover {
   text-decoration: underline;
-  color: var(--jtc-link-hover-color, #0076df); /* Use theme variable with fallback */
+  color: var(--jtc-link-hover-color, #0076df); 
 }
 
 /* Hierarchical styling for links based on nesting depth */
@@ -129,13 +119,13 @@ body.js-toc-sidebar .main-content-wrap .toc {
 
 /* Level 1 links (direct LI children of .toc-in-sidebar) */
 .toc-in-sidebar > li > a {
-  font-weight: bold; 
-  font-size: 1em; /* Relative to .nav-list--toc's font-size */
+  /* font-weight: bold; */ /* Removed bold style */
+  font-size: 1em; 
 }
 
 /* Level 2 links (links within the first level of nested ULs) */
 .toc-in-sidebar > li > ul > li > a {
-  font-size: 0.95em; /* Slightly smaller */
+  font-size: 0.95em; 
 }
 
 /* Level 3 links */
