@@ -7,19 +7,8 @@ nav_order: 1
 ![md-toc logo]({{ site.baseurl }}/images/md-toc-logo.png)
 
 # md-toc api v1
-{: .no_toc }
 
 This is the main page of the `md-toc` API v1 documentation.
-
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
-- TOC
-{:toc}
-</details>
-
 
 ## api v1 heading1
 
