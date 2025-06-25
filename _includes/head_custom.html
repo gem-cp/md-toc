@@ -1,5 +1,26 @@
 <script>
-console.log('Test script executed');
+document.addEventListener("DOMContentLoaded", function () {
+  console.log('Starting ToC script');
+  const inPageTocList = document.querySelector("#markdown-toc");
+  const sidebar = document.querySelector(".side-bar");
+  console.log('inPageTocList:', inPageTocList);
+  console.log('sidebar:', sidebar);
+
+  if (inPageTocList && sidebar) {
+    console.log('#markdown-toc and sidebar found');
+    // Add more logic here incrementally
+    const detailsParent = inPageTocList.closest('details');
+    if (detailsParent) {
+        console.log('detailsParent found');
+        // detailsParent.style.display = 'none'; // Keep this commented for now
+    }
+    document.body.classList.add("js-toc-sidebar"); 
+    console.log('Added js-toc-sidebar class');
+  } else {
+    console.log('Either #markdown-toc or sidebar not found');
+  }
+  console.log('Finished ToC script');
+});
 </script>
 
 <style>
