@@ -1,6 +1,7 @@
 <script>
 {% raw %}
 document.addEventListener("DOMContentLoaded", function () {
+  const inPageTocList = document.querySelector("#markdown-toc");
   console.log("Attempting to select #markdown-toc");
   const mt = document.querySelector("#markdown-toc");
   if (mt) {
