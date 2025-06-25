@@ -1,14 +1,66 @@
 <script>
 {% raw %}
 document.addEventListener("DOMContentLoaded", function () {
-  // Try to find the user's in-page ToC list first (#markdown-toc)
   const inPageTocList = document.querySelector("#markdown-toc");
-  console.log("Attempting to select #markdown-toc");
-  const mt = document.querySelector("#markdown-toc");
-  if (mt) {
-    console.log("Found #markdown-toc:", mt);
-  } else {
-    console.log("#markdown-toc NOT found.");
+  const sidebar = document.querySelector(".side-bar");
+
+  if (inPageTocList && sidebar) {
+    const detailsParent = inPageTocList.closest('details');
+
+    inPageTocList.classList.add("toc-in-sidebar");
+
+    const tocTitleElement = document.createElement("h2");
+    tocTitleElement.innerText = "Inhalt";
+    tocTitleElement.classList.add("nav__title");
+
+    const tocContainerInSidebar = document.createElement("nav");
+    tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+    tocContainerInSidebar.appendChild(tocTitleElement);
+    tocContainerInSidebar.appendChild(inPageTocList);
+    const activeListItem = sidebar.querySelector(".nav-list-item.active");
+    if (activeListItem) {
+      activeListItem.appendChild(tocContainerInSidebar);
+    } else {
+      sidebar.appendChild(tocContainerInSidebar);
+      if (console && console.warn) {
+        console.warn("Sidebar ToC: No active .nav-list-item found for #markdown-toc. Appending ToC to end of sidebar.");
+      }
+    }
+
+    if (detailsParent) {
+      detailsParent.style.display = 'none';
+    }
+    document.body.classList.add("js-toc-sidebar");
+
+  } else if (sidebar) {
+    const themeToc = document.querySelector(".toc"); 
+    if (themeToc) {
+      if (console && console.log) {
+        console.log("Sidebar ToC: #markdown-toc not found, attempting to use theme's .toc element.");
+      }
+      const clonedThemeToc = themeToc.cloneNode(true);
+      clonedThemeToc.classList.add("toc-in-sidebar");
+
+      const tocTitleElement = document.createElement("h2");
+      tocTitleElement.innerText = "Inhalt";
+      tocTitleElement.classList.add("nav__title");
+
+      const tocContainerInSidebar = document.createElement("nav");
+      tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+      tocContainerInSidebar.appendChild(tocTitleElement);
+      tocContainerInSidebar.appendChild(clonedThemeToc);
+
+      const activeListItem = sidebar.querySelector(".nav-list-item.active");
+      if (activeListItem) {
+        activeListItem.appendChild(tocContainerInSidebar);
+      } else {
+        sidebar.appendChild(tocContainerInSidebar);
+        if (console && console.warn) {
+          console.warn("Sidebar ToC: No active .nav-list-item found for theme .toc. Appending ToC to end of sidebar.");
+        }
+      }
+      document.body.classList.add("js-toc-sidebar");
+    }
   }
 });
 {% endraw %}
