@@ -7,8 +7,18 @@ has_children: true
 ![md-toc logo]({{ site.baseurl }}/images/md-toc-logo.png)
 
 # md-toc
+{: .no_toc }
 
 This is the main page of the `md-toc` documentation.
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+1. TOC
+{:toc}
+</details>
 
 ## Main page heading1
 
