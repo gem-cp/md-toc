@@ -1,24 +1,15 @@
 <script>
+{% raw %}
 document.addEventListener("DOMContentLoaded", function () {
-  console.log('Starting ToC script');
-  const inPageTocList = document.querySelector("#markdown-toc");
-  const sidebar = document.querySelector(".side-bar");
-  console.log('inPageTocList:', inPageTocList);
-  console.log('sidebar:', sidebar);
-
-  if (inPageTocList && sidebar) {
-    console.log('#markdown-toc and sidebar found');
-    const detailsParent = inPageTocList.closest('details');
-    if (detailsParent) {
-        console.log('detailsParent found');
-    }
-    document.body.classList.add("js-toc-sidebar"); 
-    console.log('Added js-toc-sidebar class');
+  console.log("Attempting to select #markdown-toc");
+  const mt = document.querySelector("#markdown-toc");
+  if (mt) {
+    console.log("Found #markdown-toc:", mt);
   } else {
-    console.log('Either #markdown-toc or sidebar not found');
+    console.log("#markdown-toc NOT found.");
   }
-  console.log('Finished ToC script');
 });
+{% endraw %}
 </script>
 
 <style>
