@@ -8,11 +8,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (inPageTocList && sidebar) {
     console.log('#markdown-toc and sidebar found');
-    // Add more logic here incrementally
     const detailsParent = inPageTocList.closest('details');
     if (detailsParent) {
         console.log('detailsParent found');
-        // detailsParent.style.display = 'none'; // Keep this commented for now
     }
     document.body.classList.add("js-toc-sidebar"); 
     console.log('Added js-toc-sidebar class');
