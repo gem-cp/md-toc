@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const tocContainerInSidebar = document.createElement("nav");
     tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
     // tocContainerInSidebar.appendChild(tocTitleElement); // Removed
+
     tocContainerInSidebar.appendChild(inPageTocList);
     const activeListItem = sidebar.querySelector(".nav-list-item.active");
     if (activeListItem) {
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   } else if (sidebar) {
     const themeToc = document.querySelector(".toc");
+
     if (themeToc) {
       if (console && console.log) {
         console.log("Sidebar ToC: #markdown-toc not found, attempting to use theme's .toc element.");
@@ -109,7 +111,7 @@ body.js-toc-sidebar .main-content-wrap .toc {
 
 /* Styling for LI elements within the .toc-in-sidebar */
 .toc-in-sidebar li {
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.1rem; 
 }
 
 /* Styling for A (link) elements within the .toc-in-sidebar */
