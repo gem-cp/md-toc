@@ -65,3 +65,96 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 {% endraw %}
 </script>
+
+<style>
+/* Hide original .toc if sidebar ToC is successfully injected and body has class */
+body.js-toc-sidebar .main-content-wrap .toc {
+  display: none;
+}
+
+/* Styling for the <nav> container of the ToC in the sidebar */
+.nav-list--toc {
+  margin-top: 1rem; 
+  padding-left: 0; 
+  font-size: 0.9rem; /* Base font size for ToC items */
+}
+
+/* Styling for the "Inhalt" title (H2) */
+.nav-list--toc .nav__title {
+  font-size: 0.9em; /* Relative to parent .nav-list--toc, so 0.9 * 0.9rem */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem; /* Align with other potential sidebar items */
+}
+
+/* Styling for the UL element that is the ToC itself (either #markdown-toc or cloned .toc) */
+.toc-in-sidebar {
+  all: unset; /* Remove browser default list styles */
+  display: block; /* Ensure it behaves as a block element */
+}
+
+/* Styling for all UL elements within the .toc-in-sidebar */
+.toc-in-sidebar ul {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 0; /* Base level ULs (like .toc-in-sidebar itself) have no indent */
+}
+
+/* Indentation for nested ULs (representing deeper heading levels) */
+.toc-in-sidebar ul ul { 
+  padding-left: 0.75rem; 
+  margin-top: 0.1rem; /* Small spacing for nested lists */
+  margin-bottom: 0.1rem;
+}
+
+/* Styling for LI elements within the .toc-in-sidebar */
+.toc-in-sidebar li {
+  margin-bottom: 0.1rem; 
+}
+
+/* Styling for A (link) elements within the .toc-in-sidebar */
+.toc-in-sidebar a {
+  text-decoration: none;
+  display: block; 
+  padding: 0.125rem 0.5rem; /* Padding for clickable area */
+  color: var(--jtc-nav-link-color, var(--jtc-text-color)); /* Use theme variables with fallback */
+}
+.toc-in-sidebar a:hover {
+  text-decoration: underline;
+  color: var(--jtc-link-hover-color, #0076df); /* Use theme variable with fallback */
+}
+
+/* Hierarchical styling for links based on nesting depth */
+/* .toc-in-sidebar is the main UL itself */
+
+/* Level 1 links (direct LI children of .toc-in-sidebar) */
+.toc-in-sidebar > li > a {
+  font-weight: bold; 
+  font-size: 1em; /* Relative to .nav-list--toc's font-size */
+}
+
+/* Level 2 links (links within the first level of nested ULs) */
+.toc-in-sidebar > li > ul > li > a {
+  font-size: 0.95em; /* Slightly smaller */
+}
+
+/* Level 3 links */
+.toc-in-sidebar > li > ul > li > ul > li > a {
+  font-size: 0.9em;
+}
+
+/* Level 4 links */
+.toc-in-sidebar > li > ul > li > ul > li > ul > li > a {
+  font-size: 0.85em;
+}
+
+/* Level 5 links */
+.toc-in-sidebar > li > ul > li > ul > li > ul > li > ul > li > a {
+  font-size: 0.80em;
+}
+
+/* Level 6 links */
+.toc-in-sidebar > li > ul > li > ul > li > ul > li > ul > li > ul > li > a {
+  font-size: 0.75em;
+}
+</style>
