@@ -8,9 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const detailsParent = inPageTocList.closest('details');
 
     inPageTocList.classList.add("toc-in-sidebar");
-
-    // tocTitleElement was here, now removed by user.
-
     const tocContainerInSidebar = document.createElement("nav");
     tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
     // tocContainerInSidebar.appendChild(tocTitleElement); // Removed by user
@@ -38,9 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       const clonedThemeToc = themeToc.cloneNode(true);
       clonedThemeToc.classList.add("toc-in-sidebar");
-
-      // tocTitleElement was here, now removed by user.
-
       const tocContainerInSidebar = document.createElement("nav");
       tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
       // tocContainerInSidebar.appendChild(tocTitleElement); // Removed by user
