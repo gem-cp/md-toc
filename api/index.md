@@ -10,8 +10,19 @@ has_toc: true
 ![md-toc logo]({{ site.baseurl }}/images/md-toc-logo.png)
 
 # md-toc api versions
+{: .no_toc }
 
 This is the main page of the `md-toc` API documentation.
+
+<details open markdown="block">
+  <summary>
+    Table of contents
+  </summary>
+  {: .text-delta }
+- TOC
+{:toc}
+</details>
+
 
 ## api versions page heading1
 
