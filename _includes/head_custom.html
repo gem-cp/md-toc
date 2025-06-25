@@ -1,12 +1,69 @@
 <script>
 {% raw %}
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("Attempting to select #markdown-toc");
-  const mt = document.querySelector("#markdown-toc");
-  if (mt) {
-    console.log("Found #markdown-toc:", mt);
-  } else {
-    console.log("#markdown-toc NOT found.");
+  // Try to find the user's in-page ToC list first
+  const inPageTocList = document.querySelector("#markdown-toc");
+  const sidebar = document.querySelector(".side-bar");
+
+  if (inPageTocList && sidebar) {
+    // Found the user's #markdown-toc
+    const detailsParent = inPageTocList.closest('details');
+
+    // Add class for styling to the ToC list itself
+    inPageTocList.classList.add("toc-in-sidebar");
+
+    // Create title and container for the sidebar
+    const tocTitleElement = document.createElement("h2");
+    tocTitleElement.innerText = "Inhalt"; // Or "On this page"
+    tocTitleElement.classList.add("nav__title");
+
+    const tocContainerInSidebar = document.createElement("nav");
+    tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+    tocContainerInSidebar.appendChild(tocTitleElement);
+    tocContainerInSidebar.appendChild(inPageTocList); // This moves inPageTocList
+
+    // Place container in the active sidebar item
+    const activeListItem = sidebar.querySelector(".nav-list-item.active");
+    if (activeListItem) {
+      activeListItem.appendChild(tocContainerInSidebar);
+    } else {
+      // Fallback: append to the end of the sidebar
+      sidebar.appendChild(tocContainerInSidebar);
+      console.warn("Sidebar ToC: No active .nav-list-item found. Appending ToC to end of sidebar.");
+    }
+
+    // Hide the original <details> block that contained the #markdown-toc
+    if (detailsParent) {
+      detailsParent.style.display = 'none';
+    }
+    document.body.classList.add("js-toc-sidebar"); // Used to hide other .toc elements via CSS
+
+  } else if (sidebar) {
+    // Fallback to original logic if #markdown-toc is not found, but .toc (theme's default) might exist
+    const themeToc = document.querySelector(".toc"); // Original selector for theme's .toc
+    if (themeToc) {
+      console.log("Sidebar ToC: #markdown-toc not found, attempting to use theme's .toc element.");
+      const clonedThemeToc = themeToc.cloneNode(true);
+      clonedThemeToc.classList.add("toc-in-sidebar");
+
+      const tocTitleElement = document.createElement("h2");
+      tocTitleElement.innerText = "Inhalt";
+      tocTitleElement.classList.add("nav__title");
+
+      const tocContainerInSidebar = document.createElement("nav");
+      tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+      tocContainerInSidebar.appendChild(tocTitleElement);
+      tocContainerInSidebar.appendChild(clonedThemeToc);
+
+      const activeListItem = sidebar.querySelector(".nav-list-item.active");
+      if (activeListItem) {
+        activeListItem.appendChild(tocContainerInSidebar);
+      } else {
+        sidebar.appendChild(tocContainerInSidebar);
+        console.warn("Sidebar ToC: No active .nav-list-item found for theme .toc. Appending ToC to end of sidebar.");
+      }
+      document.body.classList.add("js-toc-sidebar"); // Still hide original .toc
+    }
   }
 });
 {% endraw %}
@@ -20,20 +77,20 @@ body.js-toc-sidebar .main-content-wrap .toc {
 
 /* Stil für TOC in Sidebar */
 .nav-list--toc {
-  margin-top: 1rem;
-  padding-left: 0;
+  margin-top: 1rem; 
+  padding-left: 0; 
   font-size: 0.9rem;
 }
 
 .nav-list--toc .nav__title {
-  font-size: 0.9em;
+  font-size: 0.9em; 
   font-weight: bold;
   margin-bottom: 0.5rem;
-  padding-left: 0.5rem;
+  padding-left: 0.5rem; 
 }
 
 .toc-in-sidebar {
-  all: unset;
+  all: unset; 
   display: block;
 }
 
@@ -50,13 +107,13 @@ body.js-toc-sidebar .main-content-wrap .toc {
 }
 
 .toc-in-sidebar li {
-  margin-bottom: 0.1rem;
+  margin-bottom: 0.1rem; 
 }
 
 .toc-in-sidebar a {
   text-decoration: none;
-  display: block;
-  padding: 0.125rem 0.5rem;
+  display: block; 
+  padding: 0.125rem 0.5rem; 
   /* Attempt to use just-the-docs variables for link colors */
   color: var(--jtc-nav-link-color, var(--jtc-text-color)); /* Fallback to text color */
 }
@@ -70,7 +127,7 @@ body.js-toc-sidebar .main-content-wrap .toc {
 
 /* Level 1 links (direct li children of .toc-in-sidebar) */
 .toc-in-sidebar > li > a {
-  font-weight: bold;
+  font-weight: bold; 
   font-size: 1em; /* Relative to .nav-list--toc font-size (0.9rem) */
 }
 
@@ -82,7 +139,7 @@ body.js-toc-sidebar .main-content-wrap .toc {
 /* Level 3 links */
 .toc-in-sidebar > li > ul > li > ul > li > a {
   font-size: 0.9em;
-  /* color: var(--jtc-text-color-light); */
+  /* color: var(--jtc-text-color-light); */ 
 }
 
 /* Level 4 links */
