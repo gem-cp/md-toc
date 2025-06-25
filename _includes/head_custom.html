@@ -8,8 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const detailsParent = inPageTocList.closest('details');
 
     inPageTocList.classList.add("toc-in-sidebar");
+
+    const tocTitleElement = document.createElement("h2");
+    tocTitleElement.innerText = "Inhalt";
+    tocTitleElement.classList.add("nav__title");
+
     const tocContainerInSidebar = document.createElement("nav");
     tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+    tocContainerInSidebar.appendChild(tocTitleElement);
     tocContainerInSidebar.appendChild(inPageTocList);
     const activeListItem = sidebar.querySelector(".nav-list-item.active");
     if (activeListItem) {
@@ -34,8 +40,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       const clonedThemeToc = themeToc.cloneNode(true);
       clonedThemeToc.classList.add("toc-in-sidebar");
+
+      const tocTitleElement = document.createElement("h2");
+      tocTitleElement.innerText = "Inhalt";
+      tocTitleElement.classList.add("nav__title");
+
       const tocContainerInSidebar = document.createElement("nav");
       tocContainerInSidebar.classList.add("nav-list", "nav-list--toc");
+      tocContainerInSidebar.appendChild(tocTitleElement);
       tocContainerInSidebar.appendChild(clonedThemeToc);
 
       const activeListItem = sidebar.querySelector(".nav-list-item.active");
