@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Try to find the user's in-page ToC list first (#markdown-toc)
   console.log("Attempting to select #markdown-toc");
   const mt = document.querySelector("#markdown-toc");
+  if (mt) {
+    console.log("Found #markdown-toc:", mt);
+  } else {
+    console.log("#markdown-toc NOT found.");
+  }
   /*
   const inPageTocList = document.querySelector("#markdown-toc");
   const sidebar = document.querySelector(".site-nav");
