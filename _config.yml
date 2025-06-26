@@ -1,6 +1,6 @@
 # Titel und Beschreibung Ihrer Seite
 title: md-toc
-description: 
+description: Proof of concept to have Jekyll and just-the-docs page and ToC navigation in one panel
 
 # Theme: Just the Docs
 remote_theme: just-the-docs/just-the-docs

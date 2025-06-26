@@ -11,14 +11,8 @@ permalink: /api/
 
 This is the main page of the `md-toc` API documentation.
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
 - TOC
 {:toc}
-</details>
 
 ## api versions page heading1
 

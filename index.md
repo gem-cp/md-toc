@@ -11,14 +11,7 @@ has_children: true
 
 This is the main page of the `md-toc` documentation.
 
-<details open markdown="block">
-  <summary>
-    Table of contents
-  </summary>
-  {: .text-delta }
 - TOC
-{:toc}
-</details>
 
 ## Main page heading1
 
