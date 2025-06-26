@@ -12,6 +12,7 @@ has_children: true
 This is the main page of the `md-toc` documentation.
 
 - TOC
+{:toc}
 
 ## Main page heading1
 
