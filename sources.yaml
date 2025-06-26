@@ -1,0 +1,39 @@
+# Configuration for the md-toc document synchronization tool
+
+processed_docs_root: "docs"
+
+sources:
+  - id: "zeta"
+    name: "ZETA Documentation"
+    repo_url: "https://github.com/gematik/ZETA.git"
+    branch: "main"
+    default_front_matter:
+      layout: "default"
+      source_repo: "ZETA"
+      # Adjusted prefix for root files like index.md
+      source_url_prefix: "https://github.com/gematik/ZETA/blob/main"
+    documents:
+      - target_dir: "zeta"
+        base_repo_path: "" # Root of the repository
+        markdown_files:
+          - "index.md"
+          # - "docs/api/API_DESCRIPTION.md" # Example for later if needed
+        image_dirs: # Images for index.md are likely in the root /images
+          - "images"
+          # If specific images for docs/api/ were in docs/api/img, add another entry or refine path
+
+  - id: "vsdm2"
+    name: "VSDM2 Specification"
+    repo_url: "https://github.com/gematik/spec-VSDM2.git"
+    branch: "main"
+    default_front_matter:
+      layout: "default"
+      source_repo: "VSDM2"
+      source_url_prefix: "https://github.com/gematik/spec-VSDM2/blob/main"
+    documents:
+      - target_dir: "vsdm2"
+        base_repo_path: "docs" # Files are under the 'docs' directory in the repo
+        markdown_files:
+          - "vsdm_anwendungsfaelle.md" # Replaced VSDM_authenticators.md with an existing file
+        image_dirs: # Images for files in 'docs' are in 'docs/media'
+          - "media"
