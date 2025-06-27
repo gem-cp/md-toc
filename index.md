@@ -8,6 +8,7 @@ has_children: true
 
 {::nomarkdown}
 {% include badge.html name="release_notes" %}
+{% include badge.html name="zeta_specification" %}
 {:/nomarkdown}
 
 This is the main page of the `md-toc` documentation.
