@@ -27,7 +27,14 @@
   {%- endcomment -%}
   {%- assign params = "" -%}
   {%- if badge.style -%}     {%- capture params -%}{{ params }}&style={{ badge.style }}{%- endcapture -%}   {%- endif -%}
-  {%- if badge.logo -%}      {%- capture params -%}{{ params }}&logo={{ badge.logo }}{%- endcapture -%}      {%- endif -%}
+  {%- if badge.logo -%}
+    {%- if badge.logo contains "://" or badge.logo starts_with "//" -%}
+      {%- assign encoded_logo = badge.logo | url_encode -%}
+      {%- capture params -%}{{ params }}&logo={{ encoded_logo }}{%- endcapture -%}
+    {%- else -%}
+      {%- capture params -%}{{ params }}&logo={{ badge.logo }}{%- endcapture -%}
+    {%- endif -%}
+  {%- endif -%}
   {%- if badge.logoColor -%} {%- capture params -%}{{ params }}&logoColor={{ badge.logoColor }}{%- endcapture -%} {%- endif -%}
 
   {%- assign final_badge_url = base_badge_url -%}
@@ -40,7 +47,11 @@
   {%- comment -%}
     <!-- Output the final HTML. -->
   {%- endcomment -%}
-  <a href="{{ site.baseurl }}{{ badge.link }}"><img src="{{ final_badge_url }}" alt="{{ badge.label }}" style="vertical-align: middle;"></a>
+  {%- if badge.link contains "://" or badge.link starts_with "//" -%}
+    <a href="{{ badge.link }}"><img src="{{ final_badge_url }}" alt="{{ badge.label }}" style="vertical-align: middle;"></a>
+  {%- else -%}
+    <a href="{{ site.baseurl }}{{ badge.link }}"><img src="{{ final_badge_url }}" alt="{{ badge.label }}" style="vertical-align: middle;"></a>
+  {%- endif -%}
 
 {%- else -%}
   <!-- Badge generation failed for '{{ include.name | escape }}'. Check _data/badges.yml -->
